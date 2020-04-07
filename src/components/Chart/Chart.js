@@ -18,10 +18,14 @@ export default class Chart extends React.Component {
 
   render() {
     const { dailyData } = this.state
-    let lineData = {}
+    const { countryData, country } = this.props
+
+    let lineChartData = {}
+    let barChartData = {}
+    let barChartOptions = {}
 
     if(dailyData.length) {
-      lineData = {
+      lineChartData = {
         labels: dailyData.map(({ date }) => date),
         datasets: [
           {
@@ -41,11 +45,37 @@ export default class Chart extends React.Component {
       }
     }
 
+    if(country) {
+      barChartData = {
+        labels: ['Infected', 'Recovered', 'Deaths'],
+        datasets: [{
+          label: 'People',
+          backgroundColor: [
+            'lightblue',
+            'lightgreen',
+            'rgb(255, 0, 0, 0.7)'
+          ],
+          data: [
+            countryData.confirmed.value,
+            countryData.recovered.value,
+            countryData.deaths.value
+          ]
+        }]
+      }
+      barChartOptions = {
+        legend: { display: false },
+        title: { display: true, text: `Current state in ${country}` }
+      }
+    }
+
     return (
       <div className={styles.container}>
-        {dailyData.length
-          ? <Line data={lineData} />
-          : null
+        {!country
+          ? <Line data={lineChartData} />
+          : <Bar
+              data={barChartData}
+              options={barChartOptions}
+            />
         }
       </div>
     )

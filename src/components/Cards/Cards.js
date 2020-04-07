@@ -12,56 +12,53 @@ export default function Cards ({ data }) {
     lastUpdate
   } = data
 
+  let grids = []
+
+  if(confirmed){
+    grids = [
+      {
+        style: styles.confirmed,
+        textSecondary: 'Confirmed',
+        end: confirmed.value,
+        body2: 'Number of active cases'
+      },
+      {
+        style: styles.recovered,
+        textSecondary: 'Recovered',
+        end: recovered.value,
+        body2: 'Number of people recovered'
+      },
+      {
+        style: styles.deaths,
+        textSecondary: 'Deaths',
+        end: deaths.value,
+        body2: 'Number of deaths'
+      }
+    ]
+  }
+
   if(!confirmed) return 'Loading...'
 
   return (
     <div className={styles.container}>
       <Grid container spacing={3} justify='center' >
-        <Grid item component={Card} xs={12} md={3} className={`${styles.card} ${styles.infected}`}>
-          <CardContent>
-            <Typography color='textSecondary' >Confirmed</Typography>
-            <Typography variant='h5' >
-              <CountUp
-                start={0}
-                end={confirmed.value}
-                duration={3}
-                separator=','
-              />
-            </Typography>
-            <Typography color='textSecondary' >{new Date(lastUpdate).toDateString()}</Typography>
-            <Typography variant='body2' >Number of active cases</Typography>
-          </CardContent>
-        </Grid>
-        <Grid item component={Card} xs={12} md={3} className={`${styles.card} ${styles.recovered}`}>
-          <CardContent>
-            <Typography color='textSecondary' >Recovered</Typography>
-            <Typography variant='h5' >
-              <CountUp
-                start={0}
-                end={recovered.value}
-                duration={3}
-                separator=','
-              />
-            </Typography>
-            <Typography color='textSecondary' >{new Date(lastUpdate).toDateString()}</Typography>
-            <Typography variant='body2' >Number of recoveries</Typography>
-          </CardContent>
-        </Grid>
-        <Grid item component={Card} xs={12} md={3} className={`${styles.card} ${styles.deaths}`}>
-          <CardContent>
-            <Typography color='textSecondary' >Deaths</Typography>
-            <Typography variant='h5' >
-              <CountUp
-                start={0}
-                end={deaths.value}
-                duration={3}
-                separator=','
-              />
-            </Typography>
-            <Typography color='textSecondary' >{new Date(lastUpdate).toDateString()}</Typography>
-            <Typography variant='body2' >Number of deaths</Typography>
-          </CardContent>
-        </Grid>
+        {grids.map((gridItem, i) => (
+          <Grid item key={i} component={Card} xs={12} md={3} className={`${styles.card} ${gridItem.style}`} >
+            <CardContent>
+              <Typography color='textSecondary' >{gridItem.textSecondary}</Typography>
+              <Typography variant='h5' >
+                <CountUp
+                  start={0}
+                  end={gridItem.end}
+                  duration={3}
+                  separator=','
+                />
+              </Typography>
+              <Typography color='textSecondary' >{new Date(lastUpdate).toDateString()}</Typography>
+              <Typography variant='body2' >{gridItem.body2}</Typography>
+            </CardContent>
+          </Grid>
+        ))}
       </Grid>
     </div>
   )

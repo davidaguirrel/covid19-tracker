@@ -23,7 +23,7 @@ export default class CountryPicker extends React.Component {
       <div className={styles.container} >
         <FormControl>
           <NativeSelect defaultValue='' onChange={(e) => onCountryChange(e.target.value)} >
-            <option value="global">Global</option>
+            <option value="">Global</option>
             {countries.length &&
               countries.map((country, index) => (
                 <option key={index} value={country.name}>{country.name}</option>
