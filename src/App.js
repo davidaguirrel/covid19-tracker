@@ -13,10 +13,12 @@ class App extends React.Component {
   }
 
   render() {
+    const data = this.state.data
+
     return (
       <div className={styles.container}>
-        <Cards data={this.state}/>
-        <Chart />
+        <Cards data={data}/>
+        <Chart data={data}/>
         <CountryPicker />
       </div>
     );
