@@ -16,17 +16,27 @@ export default class Chart extends React.Component {
     })
   }
 
+  formatDate = (date) => {
+    const formattedDate = new Date(date)
+      .toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+      })
+    return formattedDate
+  }
+
   render() {
     const { dailyData } = this.state
     const { countryData, country } = this.props
 
     let lineChartData = {}
     let barChartData = {}
+    let lineChartOptions = {}
     let barChartOptions = {}
 
     if(dailyData.length) {
       lineChartData = {
-        labels: dailyData.map(({ date }) => date),
+        labels: dailyData.map(({ date }) => this.formatDate(date)),
         datasets: [
           {
             label: 'Infected',
@@ -42,6 +52,9 @@ export default class Chart extends React.Component {
             fill: true
           }
         ]
+      }
+      lineChartOptions = {
+        aspectRatio: 5
       }
     }
 
@@ -71,7 +84,7 @@ export default class Chart extends React.Component {
     return (
       <div className={styles.container}>
         {!country
-          ? <Line data={lineChartData} />
+          ? <Line options={lineChartOptions} data={lineChartData} />
           : <Bar
               data={barChartData}
               options={barChartOptions}
