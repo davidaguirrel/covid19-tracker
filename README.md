@@ -9,3 +9,7 @@ In order to build a portfolio where I can show my Front End skills, I have devel
 ### Installation
 
 If you want to test this locally, please clone/download it and execute `npm install`
+
+### Production
+
+To see the final project please visit [this link: Covid-19 Tracker](https://davidaguirrel.github.io/covid19-tracker/)
