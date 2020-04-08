@@ -79,8 +79,5 @@ export default class Chart extends React.Component {
         }
       </div>
     )
-    // return (
-    //   <span>Hola</span>
-    // )
   }
 }
